@@ -1,9 +1,10 @@
 import {useEffect, useState} from "react";
 
-export const useRequestSearchTitle = ( todos ) => {
+export const useRequestSearchTitle = ( todos, setRefresh, refresh ) => {
     const [sortState, setSortState] = useState(false)
     const [searchTitle, setSearchTitle] = useState('')
     const [debouncedSearchTitle, setDebouncedSearchTitle] = useState('')
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setDebouncedSearchTitle(searchTitle)
@@ -12,13 +13,12 @@ export const useRequestSearchTitle = ( todos ) => {
         return () => clearTimeout(timer)
     }, [searchTitle])
 
-    const searchHandler = (e) => {
-        setSearchTitle(e.target.value)
-        console.log(searchTitle)
+    const searchHandler = (value) => {
+        setSearchTitle(value)
     }
 
     const resultFoundTodos = () => {
-        if (searchTitle.trim() !== '') {
+        if (debouncedSearchTitle.trim() !== '') {
             return todos.filter(todo => todo.title.toLowerCase().includes(debouncedSearchTitle.toLowerCase()))
         } else {
             return todos;
@@ -28,6 +28,7 @@ export const useRequestSearchTitle = ( todos ) => {
     const sortTodos = () => {
         setSortState(sortState => !sortState);
         console.log(sortState)
+        setRefresh(!refresh)
     }
 
     const getSortedTodos = (todosToSort) => {
@@ -40,11 +41,13 @@ export const useRequestSearchTitle = ( todos ) => {
 
 
     const filteredAndSorted = getSortedTodos(resultFoundTodos())
+    console.log(filteredAndSorted)
 
     return {
         searchHandler,
         filteredAndSorted,
         sortTodos,
-        sortState
+        sortState,
+        searchTitle
     }
 }

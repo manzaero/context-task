@@ -7,6 +7,10 @@ import {
     useRequestUpdateTodo,
     useRequestSearchTitle
 } from "./hooks/index.js";
+import {Header} from "./components/Header.jsx";
+import {Input} from "./components/Input.jsx";
+import {TodoList} from "./components/TodoList.jsx";
+import {MainButtons} from "./components/MainButtons.jsx";
 
 
 const urlTodos = `http://localhost:3000/todos`
@@ -16,55 +20,34 @@ export const App = function () {
     const [refresh, setRefresh] = useState(false)
     const [todos, setTodos] = useState([])
 
-    const {searchHandler, filteredAndSorted, searchTitle, sortState, sortTodos} = useRequestSearchTitle( todos )
+    const {searchHandler, filteredAndSorted, searchTitle, sortState, sortTodos} = useRequestSearchTitle( todos, setRefresh, refresh )
     const {addTodo, newTodo, setTodo} = useRequestAddTodo(urlTodos, setRefresh, refresh)
     const { loading} = useRequestGetTodos(todos, setTodos, urlTodos, refresh);
     const { deleteTodo } = useRequestDeleteTodo( urlTodos, setRefresh, refresh);
-    const {updateTodos} = useRequestUpdateTodo(urlTodos, setRefresh, refresh);
+    const { updateTodos } = useRequestUpdateTodo(urlTodos, setRefresh, refresh);
 
     return (<>
         <div className={styles.container}>
-            <h2>List todos</h2>
-            <input type="text"
-                   placeholder="Search..."
-                   className={styles.searchInput}
-                   value={searchTitle}
-                   onChange={searchHandler}
-            />
-            <input type="text"
-                   className={styles.addTodo}
-                   placeholder="Add Todo"
-                    value={newTodo}
-                   onChange={setTodo}
+            <Header/>
+            <Input
+                searchTitle={searchTitle}
+                searchHandler={searchHandler}
+                newTodo={newTodo}
+                setTodo={setTodo}
             />
             {loading ? <div className={styles.loader}></div> : filteredAndSorted.length === 0 ?
-                <div className={styles.wrong}>Todos not found</div> : <ul>
-                    {filteredAndSorted.map((todo) => (<div key={todo.id} className={styles.flex}>
-                        <li key={todo.id}>{todo.title}</li>
-                        <button
-                            className={styles.btn}
-                            onClick={() => updateTodos(todo.id)}
-                        >Update
-                        </button>
-                        <button
-                            className={styles.btn}
-                            onClick={() => deleteTodo(todo.id)}
-                        >Delete
-                        </button>
-                    </div>))}
-                </ul>}
-            <button
-                className={styles.btn}
-                onClick={addTodo}
-                disabled={!newTodo}
-            >Add
-            </button>
-            <button
-                className={styles.btn}
-                onClick={sortTodos}
-                disabled={todos.length === 0}
-            >{!sortState ? 'Sort' : 'Unsorted'}
-            </button>
+                <div className={styles.wrong}>Todos not found</div> : (
+                    <TodoList
+                        todos={todos}
+                        updateTodos={updateTodos}
+                        deleteTodo={deleteTodo} />
+                )}
+            <MainButtons
+                sortState={sortState}
+                sortTodos={sortTodos}
+                addTodo={addTodo}
+                newTodo={newTodo}
+                todos={todos}/>
         </div>
     </>)
 }

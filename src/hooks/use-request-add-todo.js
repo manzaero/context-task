@@ -4,8 +4,8 @@ import {useState} from "react";
 export const useRequestAddTodo = (urlTodos, setRefresh, refresh) => {
     const [newTodo, setNewTodo] = useState('')
 
-    const setTodo = (e) => {
-        setNewTodo(e.target.value)
+    const setTodo = (value) => {
+        setNewTodo(value)
     }
     const addTodo = () => {
         if  (!newTodo.trim()) return

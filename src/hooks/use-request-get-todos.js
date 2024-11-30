@@ -9,7 +9,6 @@ export const useRequestGetTodos = (todos, setTodos, urlTodos, refresh) => {
             .then((todos) => todos.json())
             .then(todo => {
                 setTodos(todo)
-                console.log(todo)
             })
             .catch(err => {
                 console.error('Error:', err)
