@@ -1,4 +1,5 @@
 import styles from "../app.module.css";
+import PropTypes from "prop-types";
 
 export const Input = ({ searchTitle, searchHandler, newTodo, setTodo }) => (
         <>
@@ -16,3 +17,9 @@ export const Input = ({ searchTitle, searchHandler, newTodo, setTodo }) => (
             />
         </>
 )
+Input.propTypes = {
+    searchTitle: PropTypes.string,
+    searchHandler: PropTypes.func,
+    newTodo: PropTypes.string,
+    setTodo: PropTypes.func,
+}

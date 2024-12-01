@@ -9,8 +9,8 @@ import {
 } from "./hooks/index.js";
 import {Header} from "./components/Header.jsx";
 import {Input} from "./components/Input.jsx";
-import {TodoList} from "./components/TodoList.jsx";
-import {MainButtons} from "./components/MainButtons.jsx";
+import {TodoList} from "./components/todos/TodoList.jsx";
+import {ActionButtons} from './components/buttons/ActionButtons.jsx'
 import {AppContext} from "./context.js";
 
 
@@ -41,12 +41,7 @@ export const App = function () {
                         <TodoList filteredAndSorted={filteredAndSorted}/>
                     </AppContext.Provider>
                 )}
-            <MainButtons
-                sortState={sortState}
-                sortTodos={sortTodos}
-                addTodo={addTodo}
-                newTodo={newTodo}
-                todos={todos}/>
+            <ActionButtons addTodo={addTodo} newTodo={newTodo} sortState={sortState} sortTodos={sortTodos} todos={todos}/>
         </div>
     </>)
 }

@@ -46,7 +46,6 @@ export const useRequestSearchTitle = ( todos, setRefresh, refresh ) => {
         setFilteredAndSorted(result);
     }, [debouncedSearchTitle, sortState, todos]);
 
-    console.log(filteredAndSorted)
 
     return {
         searchHandler,

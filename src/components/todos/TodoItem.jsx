@@ -1,7 +1,7 @@
-import styles from "../app.module.css";
+import styles from '../../app.module.css';
 import PropTypes from "prop-types";
 import {useContext} from "react";
-import {AppContext} from "../context.js";
+import {AppContext} from "../../context.js";
 
 export const TodoItem = ({todo}) => {
     const {updateTodos, deleteTodo} = useContext(AppContext)
@@ -13,5 +13,5 @@ export const TodoItem = ({todo}) => {
         </div>)
 }
 TodoItem.propTypes = {
-    title: PropTypes.string, id: PropTypes.number,
+    todo: PropTypes.object.isRequired,
 }

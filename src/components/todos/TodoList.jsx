@@ -1,4 +1,5 @@
 import {TodoItem} from "./TodoItem.jsx";
+import PropTypes from "prop-types";
 
 export const TodoList = ({filteredAndSorted = []}) => {
 
@@ -14,4 +15,7 @@ export const TodoList = ({filteredAndSorted = []}) => {
             }
         </ul>
     )
+}
+TodoList.propTypes = {
+    filteredAndSorted: PropTypes.array.isRequired,
 }
