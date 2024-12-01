@@ -32,15 +32,20 @@ export const useRequestSearchTitle = ( todos, setRefresh, refresh ) => {
     }
 
     const getSortedTodos = (todosToSort) => {
-        if (sortState) {
+        if (!sortState) {
             return [...todosToSort].sort((a, b) => a.title < b.title ? -1 : a.title > b.title ? 1 : 0)
         } else {
             return todosToSort;
         }
     }
 
+    const [filteredAndSorted, setFilteredAndSorted] = useState([]);
 
-    const filteredAndSorted = getSortedTodos(resultFoundTodos())
+    useEffect(() => {
+        const result = getSortedTodos(resultFoundTodos());
+        setFilteredAndSorted(result);
+    }, [debouncedSearchTitle, sortState, todos]);
+
     console.log(filteredAndSorted)
 
     return {

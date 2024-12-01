@@ -1,17 +1,14 @@
-
 import {TodoItem} from "./TodoItem.jsx";
 
-export const TodoList = ({todos = [], updateTodos, deleteTodo}) => {
+export const TodoList = ({filteredAndSorted = []}) => {
 
     return (
         <ul>
             {
-                todos.map((todo) => (
+                filteredAndSorted.map((todo) => (
                     <TodoItem
                         key={todo.id}
                         todo={todo}
-                        updateTodos={updateTodos}
-                        deleteTodo={deleteTodo}
                     />
                 ))
             }

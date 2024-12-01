@@ -11,12 +11,12 @@ import {Header} from "./components/Header.jsx";
 import {Input} from "./components/Input.jsx";
 import {TodoList} from "./components/TodoList.jsx";
 import {MainButtons} from "./components/MainButtons.jsx";
+import {AppContext} from "./context.js";
 
 
 const urlTodos = `http://localhost:3000/todos`
 
 export const App = function () {
-
     const [refresh, setRefresh] = useState(false)
     const [todos, setTodos] = useState([])
 
@@ -37,10 +37,9 @@ export const App = function () {
             />
             {loading ? <div className={styles.loader}></div> : filteredAndSorted.length === 0 ?
                 <div className={styles.wrong}>Todos not found</div> : (
-                    <TodoList
-                        todos={todos}
-                        updateTodos={updateTodos}
-                        deleteTodo={deleteTodo} />
+                    <AppContext.Provider value={{ deleteTodo, updateTodos }}>
+                        <TodoList filteredAndSorted={filteredAndSorted}/>
+                    </AppContext.Provider>
                 )}
             <MainButtons
                 sortState={sortState}
